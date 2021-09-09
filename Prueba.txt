@@ -1,0 +1,35 @@
+EstDes<-function(x){
+        c<-matrix(NA, nrow = ncol(x), ncol = 12, byrow = TRUE, 
+                  dimnames = list(c(names(x)),c("n","NA","Mean","Sd", "Min.","1st Qu.","Median","3rd Qu.","Max.","Sum","IQR","P-value")))
+        for (j in 1:ncol(x)) {
+                #c[j,1]<-nrow(x[,j])-sum(is.na(x[,j]))
+                c[j,1]<-nrow(x)-sum(is.na(x[,j]))
+                c[j,2]<-sum(is.na(x[,j]))
+                c[j,3]<-as.vector((as.numeric(mean(x[[j]], na.rm = TRUE))))
+                c[j,4]<-as.vector((as.numeric(sd(x[[j]], na.rm = TRUE))))
+                c[j,5]<-min(x[,j], na.rm = TRUE)
+                c[j,6]<-as.vector((as.numeric(quantile(x[[j]],0.25, na.rm = TRUE))))
+                c[j,7]<-as.vector((as.numeric(median(x[[j]], na.rm = TRUE))))
+                c[j,8]<-as.vector((as.numeric(quantile(x[[j]],0.75, na.rm = TRUE))))
+                #c[j,13]<-as.vector((as.numeric(quantile(x[[j]],1, na.rm = TRUE)))) #Prueba
+                c[j,9]<-max(x[,j], na.rm = TRUE)
+                c[j,10]<-sum(x[,j], na.rm = TRUE)
+                c[j,11]<-as.vector((as.numeric(IQR(x[[j]], na.rm = TRUE))))
+                #rpart::psych
+                #c[j,12]<-as.vector((as.numeric(skew(x[[j]], na.rm = TRUE))))
+                #d<-shapiro.test(x[[j]])
+                #[j,12]<-as.numeric(d[2])
+                #c[j,12]<-shapiro.test(x[,j])
+        
+                if((nrow(x)-sum(is.na(x[,j]))<50)){
+                        d<-shapiro.test(x[[j]])
+                        c[j,12]<-as.numeric(d[2])
+                        }
+                else{
+                        d<-ks.test(x[[j]], "pnorm")
+                        c[j,12]<-as.numeric(d[2])
+                        }
+        }
+                print(c)
+                #print("n>=50 Kolmogorov Smirnov")
+        }
