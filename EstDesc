@@ -11,7 +11,7 @@ EstDes<-function(x){
                 c[j,6]<-as.vector((as.numeric(quantile(x[[j]],0.25, na.rm = TRUE))))
                 c[j,7]<-as.vector((as.numeric(median(x[[j]], na.rm = TRUE))))
                 c[j,8]<-as.vector((as.numeric(quantile(x[[j]],0.75, na.rm = TRUE))))
-                #c[j,13]<-as.vector((as.numeric(quantile(x[[j]],1, na.rm = TRUE))))
+                #c[j,13]<-as.vector((as.numeric(quantile(x[[j]],1, na.rm = TRUE)))) #Prueba
                 c[j,9]<-max(x[,j], na.rm = TRUE)
                 c[j,10]<-sum(x[,j], na.rm = TRUE)
                 c[j,11]<-as.vector((as.numeric(IQR(x[[j]], na.rm = TRUE))))
